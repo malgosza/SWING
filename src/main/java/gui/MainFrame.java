@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
 
@@ -100,6 +101,7 @@ public class MainFrame extends JFrame {
         exitItem.setMnemonic(KeyEvent.VK_X);
 
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,ActionEvent.CTRL_MASK));
+        importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,ActionEvent.CTRL_MASK));
 
         importDataItem.addActionListener(new ActionListener() {
             @Override
@@ -114,7 +116,14 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(fileChooser.showSaveDialog(MainFrame.this)==JFileChooser.APPROVE_OPTION) {
-                    System.out.println(fileChooser.getSelectedFile());
+                    try {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(MainFrame.this,
+                                "Could not save data to file","" +
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });

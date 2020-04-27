@@ -3,6 +3,8 @@ package controller;
 import model.*;
 import gui.FormEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Controller {
@@ -69,5 +71,13 @@ public class Controller {
                 isUs,
                 genderCat);
         db.addPerson(person);
+    }
+
+    public void saveToFile(File file) throws IOException{
+        db.saveToFile(file);
+    }
+
+    public void loadFromFile(File file) throws IOException{
+        db.loadFromFile(file);
     }
 }
